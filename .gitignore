@@ -1,0 +1,5 @@
+.idea
+data
+data/NIMA_config/logs
+data/NIMA_config/weights
+NIMA/models/MobileNet/*.hdf5
