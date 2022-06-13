@@ -1,5 +1,8 @@
 .idea
-data
-data/NIMA_config/logs
-data/NIMA_config/weights
+data/EVA_dataset/image
+data/EVA_dataset/NIMA_config/logs
+data/EVA_dataset/NIMA_config/weights
+data/AVA_dataset/NIMA_config/logs
+data/AVA_dataset/NIMA_config/weights
+
 NIMA/models/MobileNet/*.hdf5

@@ -1,8 +1,8 @@
-
 import os
 import glob
-import json
 import argparse
+
+from evaluate import evaluate
 from utils import calc_mean_score, save_json
 from model_builder import Nima
 from data_generator import TestDataGenerator
@@ -21,7 +21,7 @@ def image_dir_to_json(img_dir, img_type='jpg'):
     samples = []
     for img_path in img_paths:
         img_id = os.path.basename(img_path).split('.')[0]
-        samples.append({'image_id': img_id})
+        samples.append({'image_id': int(img_id)})
 
     return samples
 
@@ -54,10 +54,10 @@ def main(base_model_name, weights_file, image_source, predictions_file, img_form
     for i, sample in enumerate(samples):
         sample['mean_score_prediction'] = calc_mean_score(predictions[i])
 
-    print(json.dumps(samples, indent=2))
-
     if predictions_file is not None:
         save_json(samples, predictions_file)
+
+    evaluate("./data/NIMA_config/samples_test.json", predictions_file)
 
 
 if __name__ == '__main__':

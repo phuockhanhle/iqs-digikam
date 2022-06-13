@@ -8,6 +8,8 @@ from model_builder import Nima
 from samples_loader import load_samples
 from config_loader import load_config
 from utils import ensure_dir_exists
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def train(
@@ -146,7 +148,7 @@ if __name__ == '__main__':
     config_file = os.path.join(job_dir, 'config.json')
     config = load_config(config_file)
 
-    samples_file = os.path.join(job_dir, 'samples.json')
+    samples_file = os.path.join(job_dir, 'samples_train.json')
     samples = load_samples(samples_file)
 
     train(samples=samples, job_dir=job_dir, image_dir=image_dir, **config)
