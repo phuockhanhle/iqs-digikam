@@ -30,7 +30,7 @@ def predict(model, data_generator):
     return model.predict(data_generator, workers=8, use_multiprocessing=True, verbose=1)
 
 
-def main(base_model_name, weights_file, image_source, predictions_file, img_format='jpg'):
+def evaluate_core(model, image_source, predictions_file, reference_file, img_format='jpg'):
     # load samples
     if os.path.isfile(image_source):
         image_dir, samples = image_file_to_json(image_source)
@@ -38,17 +38,12 @@ def main(base_model_name, weights_file, image_source, predictions_file, img_form
         image_dir = image_source
         samples = image_dir_to_json(image_dir, img_type='jpg')
 
-    # build model and load weights
-    nima = Nima(base_model_name, weights=None)
-    nima.build()
-    nima.nima_model.load_weights(weights_file)
-
     # initialize data generator
-    data_generator = TestDataGenerator(samples, image_dir, 64, 10, nima.preprocessing_function(),
+    data_generator = TestDataGenerator(samples, image_dir, 64, 10, model.preprocessing_function(),
                                        img_format=img_format)
 
     # get predictions
-    predictions = predict(nima.nima_model, data_generator)
+    predictions = predict(model.nima_model, data_generator)
 
     # calc mean scores and add to samples
     for i, sample in enumerate(samples):
@@ -57,7 +52,16 @@ def main(base_model_name, weights_file, image_source, predictions_file, img_form
     if predictions_file is not None:
         save_json(samples, predictions_file)
 
-    evaluate("./data/NIMA_config/samples_test.json", predictions_file)
+    evaluate(reference_file, predictions_file)
+
+
+def main(base_model_name, weights_file, image_source, predictions_file, reference_file, img_format='jpg'):
+    # build model and load weights
+    nima = Nima(base_model_name, weights=None)
+    nima.build()
+    nima.nima_model.load_weights(weights_file)
+
+    evaluate_core(nima, image_source, predictions_file,reference_file, img_format)
 
 
 if __name__ == '__main__':
@@ -67,6 +71,7 @@ if __name__ == '__main__':
     parser.add_argument('-w', '--weights-file', help='path of weights file', required=True)
     parser.add_argument('-is', '--image-source', help='image directory or file', required=True)
     parser.add_argument('-pf', '--predictions-file', help='file with predictions', required=False, default=None)
+    parser.add_argument('-rf', '--reference-file', help='file with reference', required=True, default=None)
 
     args = parser.parse_args()
 

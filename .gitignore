@@ -5,4 +5,5 @@ data/EVA_dataset/NIMA_config/weights
 data/AVA_dataset/NIMA_config/logs
 data/AVA_dataset/NIMA_config/weights
 
+NIMA/src/__pycache__/
 NIMA/models/MobileNet/*.hdf5

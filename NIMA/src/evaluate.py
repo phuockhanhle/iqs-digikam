@@ -2,6 +2,8 @@ from typing import Dict
 import json
 import math
 from sklearn.metrics import mean_squared_error
+import logging
+logger = logging.getLogger()
 
 
 def get_score_ref(file_path: str) -> Dict[str, float]:
@@ -32,9 +34,9 @@ def calculate_score(reference: Dict[str, float], candidate: Dict[str, float]):
             y_pred.append(candidate[idx])
         else:
             list_id_absent.append(idx)
-    print(f"list id absent : {list_id_absent}")
-    print(f"***** MSE: {mean_squared_error(y_test, y_pred)} ****")
-    print(f"***** MSE: {math.sqrt(mean_squared_error(y_test, y_pred))} ****")
+    logger.info(f"list id absent : {list_id_absent}")
+    logger.info(f"***** MSE: {mean_squared_error(y_test, y_pred)} ****")
+    logger.info(f"***** MSE: {math.sqrt(mean_squared_error(y_test, y_pred))} ****")
 
 
 def evaluate(file_reference, file_candidate):

@@ -8,34 +8,36 @@ from model_builder import Nima
 from samples_loader import load_samples
 from config_loader import load_config
 from utils import ensure_dir_exists, set_logger
+from predict import evaluate_core
 import logging
+
 logger = logging.getLogger()
 
 from PIL import ImageFile
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 def train(
-    base_model_name,
-    n_classes,
-    samples,
-    image_dir,
-    batch_size,
-    epochs_train_dense,
-    epochs_train_all,
-    learning_rate_dense,
-    learning_rate_all,
-    dropout_rate,
-    job_dir,
-    img_format='jpg',
-    existing_weights=None,
-    multiprocessing_data_load=False,
-    num_workers_data_load=2,
-    decay_dense=0,
-    decay_all=0,
-    **kwargs
+        base_model_name,
+        n_classes,
+        samples,
+        image_dir,
+        batch_size,
+        epochs_train_dense,
+        epochs_train_all,
+        learning_rate_dense,
+        learning_rate_all,
+        dropout_rate,
+        job_dir,
+        img_format='jpg',
+        existing_weights=None,
+        multiprocessing_data_load=False,
+        num_workers_data_load=2,
+        decay_dense=0,
+        decay_all=0,
+        **kwargs
 ):
-
     # build NIMA model and load existing weights if they were provided in config
     nima = Nima(
         base_model_name, n_classes, learning_rate_dense, dropout_rate, decay=decay_dense
@@ -74,7 +76,7 @@ def train(
     )
 
     model_save_name = (
-        'weights_' + base_model_name.lower() + '_{epoch:02d}_{val_loss:.3f}.hdf5'
+            'weights_' + base_model_name.lower() + '_{epoch:02d}_{val_loss:.3f}.hdf5'
     )
     model_file_path = os.path.join(job_dir, 'weights', model_save_name)
     model_checkpointer = ModelCheckpoint(
@@ -124,21 +126,19 @@ def train(
         callbacks=[tensorboard, model_checkpointer],
     )
 
-    K.clear_session()
+    return nima
+
+    # K.clear_session()
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '-j',
-        '--job-dir',
-        help='train job directory with samples and config file',
-        required=True,
-    )
-    parser.add_argument(
-        '-i', '--image-dir', help='directory with image files', required=True
-    )
+    parser.add_argument('-j', '--job-dir', help='train job directory with samples and config file', required=True)
+    parser.add_argument('-i', '--image-dir', help='directory with image files', required=True)
+
+    parser.add_argument('-is', '--image-source', help='image directory or file', required=True)
+    parser.add_argument('-pf', '--predictions-file', help='file with predictions', required=False, default=None)
+    parser.add_argument('-rf', '--reference-file', help='file with reference', required=True, default=None)
 
     args = parser.parse_args()
 
@@ -154,6 +154,12 @@ if __name__ == '__main__':
     logger.info(config)
 
     samples_file = os.path.join(job_dir, 'samples_train.json')
-    samples = load_samples(samples_file)
+    samples_ = load_samples(samples_file)
 
-    train(samples=samples, job_dir=job_dir, image_dir=image_dir, **config)
+    for base_model_name in ["InceptionV3", "InceptionResNetV2", "MobileNet", "VGG16"]:
+        args.base_model_name = base_model_name
+        model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
+
+        evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
+
+        K.clear_session()
