@@ -1,8 +1,10 @@
-
 import os
 import json
 import tensorflow as tf
 import numpy as np
+import logging
+import time
+import sys
 
 
 def load_json(file_path):
@@ -52,3 +54,23 @@ def calc_mean_score(score_dist):
 def ensure_dir_exists(dir):
     if not os.path.exists(dir):
         os.makedirs(dir)
+
+
+def set_logger(log_folder):
+    folder_name = time.strftime("%m.%d_%H.%M")
+    save_folder = os.path.join(log_folder, folder_name)
+    ensure_dir_exists(save_folder)
+
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)  # logger.setLevel(logging.DEBUG)
+    fmt = logging.Formatter('%(asctime)s: [ %(message)s ]', '%m/%d/%Y %I:%M:%S %p')
+    console = logging.StreamHandler()
+    console.setFormatter(fmt)
+    logger.addHandler(console)
+
+    log_file = os.path.join(save_folder, 'logging.txt')
+    fileHandler = logging.FileHandler(log_file, 'w')
+    fileHandler.setFormatter(fmt)
+    logger.addHandler(fileHandler)
+
+    logger.info('COMMAND: %s' % ' '.join(sys.argv))

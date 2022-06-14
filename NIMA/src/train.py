@@ -7,7 +7,10 @@ from data_generator import TrainDataGenerator, TestDataGenerator
 from model_builder import Nima
 from samples_loader import load_samples
 from config_loader import load_config
-from utils import ensure_dir_exists
+from utils import ensure_dir_exists, set_logger
+import logging
+logger = logging.getLogger()
+
 from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
@@ -144,9 +147,11 @@ if __name__ == '__main__':
 
     ensure_dir_exists(os.path.join(job_dir, 'weights'))
     ensure_dir_exists(os.path.join(job_dir, 'logs'))
+    set_logger(os.path.join(job_dir, 'logs'))
 
     config_file = os.path.join(job_dir, 'config.json')
     config = load_config(config_file)
+    logger.info(config)
 
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples = load_samples(samples_file)
