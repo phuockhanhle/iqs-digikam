@@ -11,7 +11,7 @@ def get_score_ref(file_path: str) -> Dict[str, float]:
     with open(file_path) as json_file:
         data = json.load(json_file)
     for ex in data:
-        result[ex['image_id']] = sum(ex['label']) / len(ex['label'])
+        result[ex['image_id']] = sum([ex['label'][i] * i for i in range(len(ex['label']))]) / sum(ex['label'])
     return result
 
 

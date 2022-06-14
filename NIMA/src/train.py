@@ -158,6 +158,7 @@ if __name__ == '__main__':
 
     for base_model_name in ["InceptionV3", "InceptionResNetV2", "MobileNet", "VGG16"]:
         args.base_model_name = base_model_name
+        logger.info(f"using model base {base_model_name}")
         model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
 
         evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)

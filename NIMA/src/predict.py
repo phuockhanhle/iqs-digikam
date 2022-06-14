@@ -1,7 +1,7 @@
 import os
 import glob
 import argparse
-
+import json
 from evaluate import evaluate
 from utils import calc_mean_score, save_json
 from model_builder import Nima
@@ -26,6 +26,15 @@ def image_dir_to_json(img_dir, img_type='jpg'):
     return samples
 
 
+def ref_file_to_json(ref_file):
+    samples = []
+    with open(ref_file) as json_file:
+        data = json.load(json_file)
+    for ex in data:
+        samples.append({'image_id': int(ex['image_id'])})
+    return samples
+
+
 def predict(model, data_generator):
     return model.predict(data_generator, workers=8, use_multiprocessing=True, verbose=1)
 
@@ -36,7 +45,9 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
         image_dir, samples = image_file_to_json(image_source)
     else:
         image_dir = image_source
-        samples = image_dir_to_json(image_dir, img_type='jpg')
+        # samples = image_dir_to_json(image_dir, img_type='jpg')
+
+    samples = ref_file_to_json(reference_file)
 
     # initialize data generator
     data_generator = TestDataGenerator(samples, image_dir, 64, 10, model.preprocessing_function(),
