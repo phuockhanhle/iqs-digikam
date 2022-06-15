@@ -1,4 +1,4 @@
-export job_dir=./data/EVA_dataset/NIMA_config/
+export job_dir=./data/AVA_dataset/NIMA_config/
 export image_train_dir=D:/AVA_dataset/images/images
 export image_test_dir=D:/AVA_dataset/images/images
 

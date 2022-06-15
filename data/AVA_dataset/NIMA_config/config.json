@@ -6,7 +6,7 @@
   "existing_weights": null,
   "n_classes": 10,
   "batch_size": 8,
-  "epochs_train_dense": 1,
+  "epochs_train_dense": 5,
   "learning_rate_dense": 0.001,
   "decay_dense": 0,
   "epochs_train_all": 9,
