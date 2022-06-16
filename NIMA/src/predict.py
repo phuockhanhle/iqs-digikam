@@ -63,7 +63,7 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
     if predictions_file is not None:
         save_json(samples, predictions_file)
 
-    evaluate(reference_file, predictions_file)
+    evaluate(reference_file, samples)
 
 
 def main(base_model_name, weights_file, image_source, predictions_file, reference_file, img_format='jpg'):

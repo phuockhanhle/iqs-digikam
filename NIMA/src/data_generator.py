@@ -6,16 +6,17 @@ import utils
 
 
 class TrainDataGenerator(tf.keras.utils.Sequence):
-    '''inherits from Keras Sequence base object, allows to use multiprocessing in .fit_generator'''
+    """inherits from Keras Sequence base object, allows using multiprocessing in .fit_generator"""
     def __init__(self, samples, img_dir, batch_size, n_classes, basenet_preprocess, img_format,
                  img_load_dims=(256, 256), img_crop_dims=(224, 224), shuffle=True):
+        self.indexes = None
         self.samples = samples
         self.img_dir = img_dir
         self.batch_size = batch_size
         self.n_classes = n_classes
         self.basenet_preprocess = basenet_preprocess  # Keras basenet specific preprocessing function
-        self.img_load_dims = img_load_dims  # dimensions that images get resized into when loaded
-        self.img_crop_dims = img_crop_dims  # dimensions that images get randomly cropped to
+        self.img_load_dims = img_load_dims  # dimensions that image get resized into when loaded
+        self.img_crop_dims = img_crop_dims  # dimensions that image get randomly cropped to
         self.shuffle = shuffle
         self.img_format = img_format
         self.on_epoch_end()  # call ensures that samples are shuffled in first epoch if shuffle is set to True
@@ -59,15 +60,16 @@ class TrainDataGenerator(tf.keras.utils.Sequence):
 
 
 class TestDataGenerator(tf.keras.utils.Sequence):
-    '''inherits from Keras Sequence base object, allows to use multiprocessing in .fit_generator'''
+    """inherits from Keras Sequence base object, allows using multiprocessing in .fit_generator"""
     def __init__(self, samples, img_dir, batch_size, n_classes, basenet_preprocess, img_format,
                  img_load_dims=(224, 224)):
+        self.indexes = None
         self.samples = samples
         self.img_dir = img_dir
         self.batch_size = batch_size
         self.n_classes = n_classes
         self.basenet_preprocess = basenet_preprocess  # Keras basenet specific preprocessing function
-        self.img_load_dims = img_load_dims  # dimensions that images get resized into when loaded
+        self.img_load_dims = img_load_dims  # dimensions that image get resized into when loaded
         self.img_format = img_format
         self.on_epoch_end()  # call ensures that samples are shuffled in first epoch if shuffle is set to True
 

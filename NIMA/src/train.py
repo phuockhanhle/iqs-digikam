@@ -151,8 +151,8 @@ if __name__ == '__main__':
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples_ = load_samples(samples_file)
 
-    for epochs_train_dense in [3, 5, 7]:
-        for epochs_train_all in [5, 10, 15]:
+    for epochs_train_dense in [1, 3, 5]:
+        for epochs_train_all in [5, 7]:
             logger.info(f"using epochs_train_dense {epochs_train_dense} and epochs_train_all {epochs_train_all}")
             config["epochs_train_dense"] = epochs_train_dense
             config["epochs_train_all"] = epochs_train_all
