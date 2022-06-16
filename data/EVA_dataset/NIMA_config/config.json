@@ -15,5 +15,5 @@
   "l2_reg": null,
   "dropout_rate": 0.75,
   "multiprocessing_data_load": false,
-  "num_workers_data_load": 8
+  "num_workers_data_load": 1
 }

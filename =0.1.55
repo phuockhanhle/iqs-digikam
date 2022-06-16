@@ -1,0 +1,6 @@
+Requirement already satisfied: jax in c:\conda3\envs\tf-gsoc\lib\site-packages (0.2.22)
+Requirement already satisfied: scipy>=1.2.1 in c:\conda3\envs\tf-gsoc\lib\site-packages (from jax) (1.7.3)
+Requirement already satisfied: opt-einsum in c:\conda3\envs\tf-gsoc\lib\site-packages (from jax) (3.3.0)
+Requirement already satisfied: numpy>=1.18 in c:\conda3\envs\tf-gsoc\lib\site-packages (from jax) (1.22.3)
+Requirement already satisfied: absl-py in c:\conda3\envs\tf-gsoc\lib\site-packages (from jax) (0.15.0)
+Requirement already satisfied: six in c:\conda3\envs\tf-gsoc\lib\site-packages (from absl-py->jax) (1.16.0)
