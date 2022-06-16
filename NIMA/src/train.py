@@ -10,11 +10,8 @@ from config_loader import load_config
 from utils import ensure_dir_exists, set_logger
 from predict import evaluate_core
 import logging
-
-logger = logging.getLogger()
-
 from PIL import ImageFile
-
+logger = logging.getLogger()
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
@@ -92,7 +89,6 @@ def train(
         layer.trainable = False
 
     nima.compile()
-    # nima.nima_model.summary()
 
     nima.nima_model.fit_generator(
         generator=training_generator,
@@ -112,7 +108,6 @@ def train(
     nima.learning_rate = learning_rate_all
     nima.decay = decay_all
     nima.compile()
-    # nima.nima_model.summary()
 
     nima.nima_model.fit_generator(
         generator=training_generator,

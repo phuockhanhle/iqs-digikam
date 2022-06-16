@@ -37,7 +37,7 @@ def calculate_score(reference: Dict[str, float], candidate: Dict[str, float]):
             list_id_absent.append(idx)
     logger.info(f"list id absent : {list_id_absent}")
     logger.info(f"***** MSE: {mean_squared_error(y_test, y_pred)} ****")
-    logger.info(f"***** MSE: {math.sqrt(mean_squared_error(y_test, y_pred))} ****")
+    logger.info(f"***** RMSE: {math.sqrt(mean_squared_error(y_test, y_pred))} ****")
 
 
 def evaluate(file_reference, file_candidate):
