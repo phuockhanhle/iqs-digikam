@@ -92,7 +92,7 @@ def train(
         layer.trainable = False
 
     nima.compile()
-    nima.nima_model.summary()
+    # nima.nima_model.summary()
 
     nima.nima_model.fit_generator(
         generator=training_generator,
@@ -112,7 +112,7 @@ def train(
     nima.learning_rate = learning_rate_all
     nima.decay = decay_all
     nima.compile()
-    nima.nima_model.summary()
+    # nima.nima_model.summary()
 
     nima.nima_model.fit_generator(
         generator=training_generator,
@@ -156,11 +156,13 @@ if __name__ == '__main__':
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples_ = load_samples(samples_file)
 
-    for base_model_name in ["InceptionV3", "InceptionResNetV2", "MobileNet", "VGG16"]:
-        args.base_model_name = base_model_name
-        logger.info(f"using model base {base_model_name}")
-        model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
+    for epochs_train_dense in [3, 5, 7]:
+        for epochs_train_all in [5, 10, 15]:
+            logger.info(f"using epochs_train_dense {epochs_train_dense} and epochs_train_all {epochs_train_all}")
+            config["epochs_train_dense"] = epochs_train_dense
+            config["epochs_train_all"] = epochs_train_all
+            model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
 
-        evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
+            evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
 
-        K.clear_session()
+            K.clear_session()
