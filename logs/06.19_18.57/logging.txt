@@ -1,0 +1,4 @@
+06/19/2022 06:57:56 PM: [ COMMAND: ./NIMA/src/predict.py -b MobileNet -w ./NIMA/models/MobileNet/weights_mobilenet_aesthetic_0.07.hdf5 -is D:/AVA_dataset/images/images -pf ./data/AVA_dataset/NIMA_config/pred.json -rf ./data/AVA_dataset/NIMA_config/samples_test.json ]
+06/19/2022 06:59:19 PM: [ list id absent : [] ]
+06/19/2022 06:59:19 PM: [ ***** MSE: 0.31358666145535047 **** ]
+06/19/2022 06:59:19 PM: [ ***** RMSE: 0.559988090458494 **** ]

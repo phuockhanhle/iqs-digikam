@@ -2,10 +2,14 @@ import os
 import glob
 import argparse
 import json
+import logging
 from evaluate import evaluate
-from utils import calc_mean_score, save_json
+from utils import calc_mean_score, save_json, set_logger
 from model_builder import Nima
 from data_generator import TestDataGenerator
+from PIL import ImageFile
+ImageFile.LOAD_TRUNCATED_IMAGES = True
+logger = logging.getLogger()
 
 
 def image_file_to_json(img_path):
@@ -45,7 +49,6 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
         image_dir, samples = image_file_to_json(image_source)
     else:
         image_dir = image_source
-        # samples = image_dir_to_json(image_dir, img_type='jpg')
 
     samples = ref_file_to_json(reference_file)
 
@@ -85,5 +88,6 @@ if __name__ == '__main__':
     parser.add_argument('-rf', '--reference-file', help='file with reference', required=True, default=None)
 
     args = parser.parse_args()
+    set_logger(os.path.join("./", 'logs'))
 
     main(**args.__dict__)
