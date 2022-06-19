@@ -1,2 +1,0 @@
-Requirement already satisfied: absl-py in c:\conda3\envs\tf-gsoc\lib\site-packages (0.15.0)
-Requirement already satisfied: six in c:\conda3\envs\tf-gsoc\lib\site-packages (from absl-py) (1.16.0)
