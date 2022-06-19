@@ -26,13 +26,13 @@ def get_score_candidate(prediction: List[Any]) -> Dict[str, float]:
 def calculate_score(reference: Dict[str, float], candidate: Dict[str, float]):
     y_pred = []
     y_test = []
-    list_id_absent = []
-    for idx in reference.keys():
-        if idx in candidate.keys():
-            y_test.append(reference[idx])
-            y_pred.append(candidate[idx])
-        else:
-            list_id_absent.append(idx)
+    list_common_id = [i for i in reference.keys() if i in candidate.keys()]
+    list_id_absent = list(set(reference.keys()) - set(list_common_id)) + list(
+        set(candidate.keys()) - set(list_common_id))
+    for id_image in list_common_id:
+        y_pred.append(candidate[id_image])
+        y_test.append(reference[id_image])
+
     logger.info(f"list id absent : {list_id_absent}")
     logger.info(f"***** MSE: {mean_squared_error(y_test, y_pred)} ****")
     logger.info(f"***** RMSE: {math.sqrt(mean_squared_error(y_test, y_pred))} ****")

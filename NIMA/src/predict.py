@@ -50,7 +50,7 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
     samples = ref_file_to_json(reference_file)
 
     # initialize data generator
-    data_generator = TestDataGenerator(samples, image_dir, 1, 10, model.preprocessing_function(),
+    data_generator = TestDataGenerator(samples, image_dir, 32, 10, model.preprocessing_function(),
                                        img_format=img_format)
 
     # get predictions

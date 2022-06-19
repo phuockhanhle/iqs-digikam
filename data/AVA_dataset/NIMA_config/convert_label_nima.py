@@ -16,7 +16,8 @@ def parse_raw_data(df_data, source, list_id_image):
         image_id = int(row[1])
         if image_id in list_id_image and check_file_exist(source, image_id):
             label = [int(row[j]) for j in range(2, 12)]
-            samples.append({'image_id': image_id, 'label': label})
+            score = sum([label[k] * (k+1) for k in range(len(label))]) / sum(label)
+            samples.append({'image_id': image_id, 'label': label, 'score': score})
     return samples
 
 
@@ -40,7 +41,7 @@ def check_file_exist(base_path, file_name):
 if __name__ == '__main__':
     source_path = r'D:/AVA_dataset/images/images/'
     df = get_dataframe('D:/AVA_dataset/AVA.txt')
-    for m in ["train"]:
+    for m in ["train", "test"]:
         list_id = get_id(path=r'D:/AVA_dataset/aesthetics_image_lists/', mode=m)
         data = parse_raw_data(df, source_path, list_id)
         with open('./data/AVA_dataset/NIMA_config/samples_%s.json' % m, 'w') as f:

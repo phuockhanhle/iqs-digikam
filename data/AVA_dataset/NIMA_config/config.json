@@ -5,7 +5,7 @@
   "base_model_name": "VGG16",
   "existing_weights": null,
   "n_classes": 10,
-  "batch_size": 8,
+  "batch_size": 4,
   "epochs_train_dense": 5,
   "learning_rate_dense": 0.001,
   "decay_dense": 0,

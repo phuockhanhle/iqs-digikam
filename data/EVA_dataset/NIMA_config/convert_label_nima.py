@@ -22,8 +22,8 @@ def parse_raw_data(df_data):
             label = []
             for j in range(10):
                 label.append(list_score.count(j+1))
-
-            samples.append({'image_id': int(image_id), 'label': label})
+            score = sum([label[k] * (k + 1) for k in range(len(label))]) / sum(label)
+            samples.append({'image_id': int(image_id), 'label': label, 'score': score})
             list_image_id.append(image_id)
     return samples
 

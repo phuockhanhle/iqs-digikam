@@ -100,6 +100,7 @@ class TestDataGenerator(tf.keras.utils.Sequence):
             # normalize labels
             if sample.get('label') is not None:
                 y[i, ] = utils.normalize_labels(sample['label'])
+            # print(f"image {sample['image_id']} data : {img[0][0]} label : {y[i,]}")
 
         # apply basenet specific preprocessing
         # input is 4D numpy array of RGB values within [0, 255]
