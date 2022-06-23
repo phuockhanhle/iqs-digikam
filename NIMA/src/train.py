@@ -42,7 +42,8 @@ def train(
     )
     nima.build()
 
-    if existing_weights is not None:
+    if existing_weights != '':
+        logger.info(f"Logging model from {existing_weights}")
         nima.nima_model.load_weights(existing_weights)
 
     # split samples in train and validation set, and initialize data generators
@@ -131,7 +132,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-j', '--job-dir', help='train job directory with samples and config file', required=True)
     parser.add_argument('-i', '--image-dir', help='directory with image files', required=True)
-
+    parser.add_argument('-ew', '--existing-weights', help='path of weights file', default='')
     parser.add_argument('-is', '--image-source', help='image directory or file', required=True)
     parser.add_argument('-pf', '--predictions-file', help='file with predictions', required=False, default=None)
     parser.add_argument('-rf', '--reference-file', help='file with reference', required=True, default=None)
@@ -152,11 +153,12 @@ if __name__ == '__main__':
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples_ = load_samples(samples_file)
 
-    for epochs_train_dense in [1]:
-        for epochs_train_all in [3, 5, 7]:
+    for epochs_train_dense in [5]:
+        for epochs_train_all in [9]:
             logger.info(f"using epochs_train_dense {epochs_train_dense} and epochs_train_all {epochs_train_all}")
             config["epochs_train_dense"] = epochs_train_dense
             config["epochs_train_all"] = epochs_train_all
+            config["existing_weights"] = args.existing_weights
             model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
 
             evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)

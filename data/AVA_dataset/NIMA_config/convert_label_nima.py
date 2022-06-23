@@ -16,8 +16,16 @@ def parse_raw_data(df_data, source, list_id_image):
         image_id = int(row[1])
         if image_id in list_id_image and check_file_exist(source, image_id):
             label = [int(row[j]) for j in range(2, 12)]
-            score = sum([label[k] * (k+1) for k in range(len(label))]) / sum(label)
-            samples.append({'image_id': image_id, 'label': label, 'score': score})
+            score = sum([label[k] * (k + 1) for k in range(len(label))]) / sum(label)
+            cls = round(score) + 1
+            if score < 0.3:
+                digikam_label = 0
+            elif score < 0.7:
+                digikam_label = 1
+            else:
+                digikam_label = 2
+            samples.append(
+                {'image_id': image_id, 'label': label, 'score': score, "class": cls, "digikam_label": digikam_label})
     return samples
 
 

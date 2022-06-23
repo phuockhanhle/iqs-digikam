@@ -8,6 +8,7 @@ from utils import calc_mean_score, save_json, set_logger
 from model_builder import Nima
 from data_generator import TestDataGenerator
 from PIL import ImageFile
+
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 logger = logging.getLogger()
 
@@ -20,7 +21,7 @@ def image_file_to_json(img_path):
 
 
 def image_dir_to_json(img_dir, img_type='jpg'):
-    img_paths = glob.glob(os.path.join(img_dir, '*.'+img_type))
+    img_paths = glob.glob(os.path.join(img_dir, '*.' + img_type))
 
     samples = []
     for img_path in img_paths:
@@ -75,11 +76,10 @@ def main(base_model_name, weights_file, image_source, predictions_file, referenc
     nima.build()
     nima.nima_model.load_weights(weights_file)
 
-    evaluate_core(nima, image_source, predictions_file,reference_file, img_format)
+    evaluate_core(nima, image_source, predictions_file, reference_file, img_format)
 
 
 if __name__ == '__main__':
-
     parser = argparse.ArgumentParser()
     parser.add_argument('-b', '--base-model-name', help='CNN base model name', required=True)
     parser.add_argument('-w', '--weights-file', help='path of weights file', required=True)

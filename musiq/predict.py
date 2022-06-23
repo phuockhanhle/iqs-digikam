@@ -27,8 +27,8 @@ import ml_collections
 import numpy as np
 import tensorflow.compat.v1 as tf
 
-import musiq.model.multiscale_transformer as model_mod
-import musiq.model.preprocessing as pp_lib
+import model.multiscale_transformer as model_mod
+import model.processing as pp_lib
 
 FLAGS = flags.FLAGS
 
