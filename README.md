@@ -27,3 +27,11 @@ Principal idea is to combine different dataset to get as most generalized datase
   - Label of NIMA is list a from 0 -> 9, how to express this type of label
     - this kind of label is used to represent the distribution of human idea on an image, hence, reduce the effect of imbalance data
     - If we can combine various dataset, the problem of imbalance data would be resout, so, dont need to follow NIMA label format
+
+
+In time of finding new dataset and find solution for imbalance dataset, I tried to write a small c++ code that simulates the inference model using opencv and the module DNN. mostly of my work is :
+- A python script to load model from a checkpoint, freeze the weight, and save the model. Freezing the model is important
+- Compile C++ with opencv 4.5.5 
+- Receive an image, check that the image is existed or load the image as cv::Mat
+- Load pb file which is product by the python.
+- Set input and run forward function 

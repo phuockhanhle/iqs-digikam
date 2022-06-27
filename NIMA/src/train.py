@@ -10,7 +10,9 @@ from config_loader import load_config
 from utils import ensure_dir_exists, set_logger
 from predict import evaluate_core
 import logging
+import tensorflow as tf
 from PIL import ImageFile
+from tensorflow.python.framework.convert_to_constants import convert_variables_to_constants_v2 as cvtc2
 
 logger = logging.getLogger()
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -144,7 +146,7 @@ if __name__ == '__main__':
 
     ensure_dir_exists(os.path.join(job_dir, 'weights'))
     ensure_dir_exists(os.path.join(job_dir, 'logs'))
-    set_logger(os.path.join(job_dir, 'logs'))
+    save_folder = set_logger(os.path.join(job_dir, 'logs'))
 
     config_file = os.path.join(job_dir, 'config.json')
     config = load_config(config_file)
@@ -153,14 +155,25 @@ if __name__ == '__main__':
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples_ = load_samples(samples_file)
 
-    for epochs_train_dense in [5]:
-        for epochs_train_all in [9]:
+    for epochs_train_dense in [0]:
+        for epochs_train_all in [0]:
             logger.info(f"using epochs_train_dense {epochs_train_dense} and epochs_train_all {epochs_train_all}")
             config["epochs_train_dense"] = epochs_train_dense
             config["epochs_train_all"] = epochs_train_all
             config["existing_weights"] = args.existing_weights
             model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
 
-            evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
+            # evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
+            full_model = tf.function(lambda inputs: model_nima.nima_model(inputs))
+            full_model = full_model.get_concrete_function(
+                [tf.TensorSpec(model_input.shape, model_input.dtype) for model_input in model_nima.nima_model.inputs])
+            frozen_func = cvtc2(full_model)
+            frozen_func.graph.as_graph_def()
+            tf.io.write_graph(graph_or_graph_def=frozen_func.graph, logdir="./frozen_models",
+                              name="simple_frozen_graph.pb", as_text=False)
 
+            # model_nima.nima_model.save("./NIMA/model/MobileNet/model_cpp")
+            #
+            # tf.saved_model.save(model_nima.nima_model, "tmp_model")
+            # keras2onnx.convert_keras(model_nima.nima_model, "./NIMA/model/MobileNet/model_cpp/model.onnx")
             K.clear_session()

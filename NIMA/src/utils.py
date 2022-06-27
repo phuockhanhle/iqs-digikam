@@ -73,4 +73,6 @@ def set_logger(log_folder):
     fileHandler.setFormatter(fmt)
     logger.addHandler(fileHandler)
 
+    return save_folder
+
     logger.info('COMMAND: %s' % ' '.join(sys.argv))
