@@ -1,8 +1,10 @@
+import math
 import os
-
+import random
 import pandas as pd
 import json
 from tqdm import tqdm
+random.seed(42)
 
 
 def get_dataframe(mean_raw_file):
@@ -17,10 +19,10 @@ def parse_raw_data(df_data, source, list_id_image):
         if image_id in list_id_image and check_file_exist(source, image_id):
             label = [int(row[j]) for j in range(2, 12)]
             score = sum([label[k] * (k + 1) for k in range(len(label))]) / sum(label)
-            cls = round(score) + 1
-            if score < 0.3:
+            cls = math.trunc(score) + 1
+            if cls <= 5:
                 digikam_label = 0
-            elif score < 0.7:
+            elif cls <= 6:
                 digikam_label = 1
             else:
                 digikam_label = 2
@@ -49,8 +51,17 @@ def check_file_exist(base_path, file_name):
 if __name__ == '__main__':
     source_path = r'D:/AVA_dataset/images/images/'
     df = get_dataframe('D:/AVA_dataset/AVA.txt')
-    for m in ["train", "test"]:
-        list_id = get_id(path=r'D:/AVA_dataset/aesthetics_image_lists/', mode=m)
-        data = parse_raw_data(df, source_path, list_id)
-        with open('./data/AVA_dataset/NIMA_config/samples_%s.json' % m, 'w') as f:
-            json.dump(data, f, indent=2, sort_keys=True)
+    list_id_train = get_id(path=r'D:/AVA_dataset/aesthetics_image_lists/', mode="train")
+    list_id_test = get_id(path=r'D:/AVA_dataset/aesthetics_image_lists/', mode="test")
+    list_id = list_id_train + list_id_test
+    random.shuffle(list_id)
+    list_id_train = list_id[:int(len(list_id) * 0.8)]
+    list_id_test = list_id[int(len(list_id) * 0.8):]
+
+    data_train = parse_raw_data(df, source_path, list_id_train)
+    with open('./data/AVA_dataset/NIMA_config/samples_train.json', 'w') as f:
+        json.dump(data_train, f, indent=2, sort_keys=True)
+
+    data_test = parse_raw_data(df, source_path, list_id_test)
+    with open('./data/AVA_dataset/NIMA_config/samples_test.json', 'w') as f:
+        json.dump(data_test, f, indent=2, sort_keys=True)

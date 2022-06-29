@@ -27,3 +27,7 @@ Principal idea is to combine different dataset to get as most generalized datase
   - Label of NIMA is list a from 0 -> 9, how to express this type of label
     - this kind of label is used to represent the distribution of human idea on an image, hence, reduce the effect of imbalance data
     - If we can combine various dataset, the problem of imbalance data would be resout, so, dont need to follow NIMA label format
+
+One of the main question is how to evaluate the generalisation of the model. Using one dataset makes us fall to the imbalance of that data. But combing various dataset causes the problem of balancing the properties of all dataset. At last, we can present the dataset on separated datasets, but using a good metric. Metric like MSE or F1 score will get the problem of scale between different dataset. Hence, I propose using Pearson Correlation score.
+
+As the model will serve as a classification of 3 class, in digiKam, I decided to have a metric of 3 class classification [0 1 2] represent bad, normal and good image. The question is how to separate them reasonably.
