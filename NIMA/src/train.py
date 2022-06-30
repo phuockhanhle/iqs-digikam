@@ -148,6 +148,7 @@ if __name__ == '__main__':
 
     config_file = os.path.join(job_dir, 'config.json')
     config = load_config(config_file)
+    config["n_classes"] = 3
     logger.info(config)
 
     samples_file = os.path.join(job_dir, 'samples_train.json')

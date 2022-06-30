@@ -36,7 +36,7 @@ def ref_file_to_json(ref_file):
     with open(ref_file) as json_file:
         data = json.load(json_file)
     for ex in data:
-        samples.append({'image_id': int(ex['image_id'])})
+        samples.append({'image_id': int(ex['image_id']), 'digikam_label': int(ex['digikam_label'])})
     return samples
 
 
@@ -62,7 +62,8 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
 
     # calc mean scores and add to samples
     for i, sample in enumerate(samples):
-        sample['mean_score_prediction'] = calc_mean_score(predictions[i])
+        # sample['mean_score_prediction'] = calc_mean_score(predictions[i])
+        sample['mean_score_prediction'] = predictions[i].index(max(predictions[i]))
 
     if predictions_file is not None:
         save_json(samples, predictions_file)

@@ -47,7 +47,7 @@ def calculate_metric_regression(reference: Dict[str, float], candidate: Dict[str
     logger.info(f"***** RMSE: {math.sqrt(mean_squared_error(y_test, y_pred))} ****")
     logger.info(f"***** SRCC: {stats.spearmanr(y_test, y_pred)} ****")
     logger.info(f"***** F1 score: {f1_score(y_test_cls, y_pred_cls, average='weighted')} ****")
-    logger.info(f"***** F1 score: {f1_score(y_test_cls_digikam, y_pred_cls_digikam, average='weighted')} ****")
+    logger.info(f"***** F1 score digikam: {f1_score(y_test_cls_digikam, y_pred_cls_digikam, average='weighted')} ****")
 
 
 def evaluate(file_reference, prediction):

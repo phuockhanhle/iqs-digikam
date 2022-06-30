@@ -3,6 +3,7 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dropout, Dense
 from tensorflow.keras.optimizers import Adam
 from losses import earth_movers_distance
+from tensorflow.keras.losses import CategoricalCrossentropy
 
 
 class Nima:
@@ -42,7 +43,7 @@ class Nima:
         self.nima_model = Model(self.base_model.inputs, x)
 
     def compile(self):
-        self.nima_model.compile(optimizer=Adam(lr=self.learning_rate, decay=self.decay), loss=self.loss)
+        self.nima_model.compile(optimizer=Adam(lr=self.learning_rate, decay=self.decay), loss=CategoricalCrossentropy())
 
     def preprocessing_function(self):
         return self.base_module.preprocess_input
