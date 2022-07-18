@@ -27,7 +27,7 @@ class Nima:
         elif self.base_model_name == 'InceptionResNetV2':
             self.base_module = importlib.import_module('tensorflow.keras.applications.inception_resnet_v2')
         else:
-            self.base_module = importlib.import_module('tensorflow.keras.applications.'+self.base_model_name.lower())
+            self.base_module = importlib.import_module('tensorflow.keras.applications.' + self.base_model_name.lower())
 
     def build(self):
         # get base model class
@@ -43,7 +43,8 @@ class Nima:
         self.nima_model = Model(self.base_model.inputs, x)
 
     def compile(self):
-        self.nima_model.compile(optimizer=Adam(lr=self.learning_rate, decay=self.decay), loss=CategoricalCrossentropy())
+        self.nima_model.compile(optimizer=Adam(learning_rate=self.learning_rate, decay=self.decay),
+                                loss=CategoricalCrossentropy())
 
     def preprocessing_function(self):
         return self.base_module.preprocess_input

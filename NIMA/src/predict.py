@@ -3,6 +3,9 @@ import glob
 import argparse
 import json
 import logging
+
+import numpy
+
 from evaluate import evaluate
 from utils import calc_mean_score, save_json, set_logger
 from model_builder import Nima
@@ -54,7 +57,7 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
     samples = ref_file_to_json(reference_file)
 
     # initialize data generator
-    data_generator = TestDataGenerator(samples, image_dir, 32, 10, model.preprocessing_function(),
+    data_generator = TestDataGenerator(samples, image_dir, 4, 3, model.preprocessing_function(),
                                        img_format=img_format)
 
     # get predictions
@@ -63,7 +66,7 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
     # calc mean scores and add to samples
     for i, sample in enumerate(samples):
         # sample['mean_score_prediction'] = calc_mean_score(predictions[i])
-        sample['mean_score_prediction'] = predictions[i].index(max(predictions[i]))
+        sample['mean_score_prediction'] = int(numpy.argmax(predictions[i]))
 
     if predictions_file is not None:
         save_json(samples, predictions_file)
