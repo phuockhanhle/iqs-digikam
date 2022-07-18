@@ -1,8 +1,7 @@
 from typing import Dict, List, Any
 import json
 import math
-from scipy import stats
-from sklearn.metrics import mean_squared_error, f1_score
+from sklearn.metrics import f1_score
 import logging
 
 logger = logging.getLogger()
@@ -13,7 +12,8 @@ def get_score_ref(file_path: str) -> Dict[str, float]:
     with open(file_path) as json_file:
         data = json.load(json_file)
     for ex in data:
-        result[ex['image_id']] = sum([ex['label'][i] * (i + 1) for i in range(len(ex['label']))]) / sum(ex['label'])
+        # result[ex['image_id']] = sum([ex['label'][i] * (i + 1) for i in range(len(ex['label']))]) / sum(ex['label'])
+        result[ex['image_id']] = ex['digikam_label']
     return result
 
 
@@ -39,8 +39,8 @@ def calculate_metric_regression(reference: Dict[str, float], candidate: Dict[str
         y_test.append(reference[id_image])
         y_pred_cls.append(math.trunc(candidate[id_image]) + 1)
         y_test_cls.append(math.trunc(reference[id_image]) + 1)
-        y_pred_cls_digikam.append(to_digikam_cls(candidate[id_image]))
-        y_test_cls_digikam.append(to_digikam_cls(reference[id_image]))
+        y_pred_cls_digikam.append(candidate[id_image])
+        y_test_cls_digikam.append(reference[id_image])
 
     logger.info(f"list id absent : {list_id_absent}")
     # logger.info(f"***** MSE: {mean_squared_error(y_test, y_pred)} ****")
@@ -63,13 +63,3 @@ def multi_class_accuracy(y_test, y_pred):
         if y == y_pred[idx]:
             true_score += 1
     return true_score / len(y_test)
-
-
-def to_digikam_cls(score):
-    cls = math.trunc(score) + 1
-    if cls <= 5:
-        return 0
-    elif cls <= 6:
-        return 1
-    else:
-        return 2
