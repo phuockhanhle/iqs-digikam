@@ -5,6 +5,7 @@ import numpy as np
 import logging
 import time
 import sys
+import cv2 as cv
 
 
 def load_json(file_path):
@@ -76,3 +77,10 @@ def set_logger(log_folder):
     return save_folder
 
     logger.info('COMMAND: %s' % ' '.join(sys.argv))
+
+
+def opencv_preprocess(image_path):
+    img = cv.imread(image_path)
+    cv_rgb = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+    cv_resized = cv.resize(cv_rgb, (224, 224), 0, 0, interpolation=cv.INTER_NEAREST_EXACT)
+    return cv_resized
