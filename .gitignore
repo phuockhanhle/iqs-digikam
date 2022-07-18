@@ -9,3 +9,5 @@ NIMA/src/__pycache__/
 musiq/checkpoints/
 .vs/
 NIMA/models/MobileNet/*.hdf5
+
+inference/inference_iqs/x64
