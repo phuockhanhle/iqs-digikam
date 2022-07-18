@@ -31,3 +31,11 @@ Principal idea is to combine different dataset to get as most generalized datase
 One of the main question is how to evaluate the generalisation of the model. Using one dataset makes us fall to the imbalance of that data. But combing various dataset causes the problem of balancing the properties of all dataset. At last, we can present the dataset on separated datasets, but using a good metric. Metric like MSE or F1 score will get the problem of scale between different dataset. Hence, I propose using Pearson Correlation score.
 
 As the model will serve as a classification of 3 class, in digiKam, I decided to have a metric of 3 class classification [0 1 2] represent bad, normal and good image. The question is how to separate them reasonably.
+
+In order to perform the score by the class of digikam, I set 2 threshold of score to separating the class. As the purpose is to have a balanced data, I choose the threshold is 5 and 6, it means if the score <= 5, the image is labeled as 0, 5 < score <= 6 is for normal, and the rest is for good image. **we need to notice that these thresholds is not choose by a good reference**.
+
+The model also should be changed to adapt the new context, the last layer is changed to softmax with 3 classes.
+The result is not so good, F1 score on each class is 0.62857742 0.43022272 0.58738075 and the accuracy is 0.5438715820976738. That means there are only a half of case it gives a right prediction.
+The main reason is that the images that are labeled 0 is not really bad, so, it gives the confusion for model. 
+
+The solution is to concate several dataset, and get bad image from different dataset, like koniq10k.
