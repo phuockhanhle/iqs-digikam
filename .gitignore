@@ -8,3 +8,4 @@ data/AVA_dataset/NIMA_config/weights
 NIMA/src/__pycache__/
 musiq/checkpoints/
 NIMA/models/MobileNet/*.hdf5
+data/Saved_model
