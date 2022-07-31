@@ -131,9 +131,9 @@ def train(
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-j', '--job-dir', help='train job directory with samples and config file', required=True)
-    parser.add_argument('-i', '--image-dir', help='directory with image files', required=True)
+    parser.add_argument('-it', '--image-dir', help='directory with image files for train')
     parser.add_argument('-ew', '--existing-weights', help='path of weights file', default='')
-    parser.add_argument('-is', '--image-source', help='image directory or file', required=True)
+    parser.add_argument('-ie', '--image-source', help='image directory or file', required=True)
     parser.add_argument('-pf', '--predictions-file', help='file with predictions', required=False, default=None)
     parser.add_argument('-rf', '--reference-file', help='file with reference', required=True, default=None)
 
@@ -156,7 +156,7 @@ if __name__ == '__main__':
 
     for epochs_train_dense in [3]:
         for epochs_train_all in [5]:
-            for learning_rate_all in [0.0001, 0.00005, 0.00001, 0.000001]:
+            for learning_rate_all in [0.0001, 0.00001, 0.000001]:
                 logger.info(f"using epochs_train_dense {epochs_train_dense} and epochs_train_all {epochs_train_all}")
                 config["epochs_train_dense"] = epochs_train_dense
                 config["epochs_train_all"] = epochs_train_all

@@ -1,0 +1,1 @@
+07/30/2022 10:45:16 AM: [ COMMAND: ./NIMA/src/predict.py -b InceptionResNetV2 -w C:/ML/iqs-digikam/data/combined_dataset/NIMA_config/weights/weights_inceptionresnetv2_06_0.895.hdf5 -is D:/AVA_dataset/images/images -pf ./data/combined_dataset/NIMA_config/pred.json -rf ./data/combined_dataset/NIMA_config/samples_test.json ]

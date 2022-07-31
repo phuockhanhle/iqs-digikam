@@ -13,14 +13,20 @@ def get_score_ref(file_path: str) -> Dict[str, float]:
         data = json.load(json_file)
     for ex in data:
         # result[ex['image_id']] = sum([ex['label'][i] * (i + 1) for i in range(len(ex['label']))]) / sum(ex['label'])
-        result[ex['image_id']] = ex['digikam_label']
+        if "image_path" not in ex.keys():
+            result[ex['image_id']] = ex['digikam_label']
+        else:
+            result[ex['image_path']] = ex['digikam_label']
     return result
 
 
 def get_score_candidate(prediction: List[Any]) -> Dict[str, float]:
     result = {}
     for ex in prediction:
-        result[ex['image_id']] = ex['mean_score_prediction']
+        if "image_path" not in ex.keys():
+            result[ex['image_id']] = ex['mean_score_prediction']
+        else:
+            result[ex['image_path']] = ex['mean_score_prediction']
     return result
 
 

@@ -7,7 +7,7 @@ import logging
 import numpy
 
 from evaluate import evaluate
-from utils import calc_mean_score, save_json, set_logger
+from utils import save_json, set_logger
 from model_builder import Nima
 from data_generator import TestDataGenerator
 from PIL import ImageFile
@@ -39,7 +39,10 @@ def ref_file_to_json(ref_file):
     with open(ref_file) as json_file:
         data = json.load(json_file)
     for ex in data:
-        samples.append({'image_id': int(ex['image_id']), 'digikam_label': int(ex['digikam_label'])})
+        if "image_path" not in ex.keys():
+            samples.append({'image_id': int(ex['image_id']), 'digikam_label': int(ex['digikam_label'])})
+        else:
+            samples.append({'image_path': ex['image_path'], 'digikam_label': int(ex['digikam_label'])})
     return samples
 
 
@@ -76,7 +79,7 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
 
 def main(base_model_name, weights_file, image_source, predictions_file, reference_file, img_format='jpg'):
     # build model and load weights
-    nima = Nima(base_model_name, weights=None)
+    nima = Nima(base_model_name, n_classes=3, weights=None)
     nima.build()
     nima.nima_model.load_weights(weights_file)
 

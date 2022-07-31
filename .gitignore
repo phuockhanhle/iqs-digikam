@@ -4,6 +4,8 @@ data/EVA_dataset/NIMA_config/logs
 data/EVA_dataset/NIMA_config/weights
 data/AVA_dataset/NIMA_config/logs
 data/AVA_dataset/NIMA_config/weights
+data/combined_dataset/NIMA_config/logs
+data/combined_dataset/NIMA_config/weights
 
 NIMA/src/__pycache__/
 musiq/checkpoints/
