@@ -82,7 +82,7 @@ def train(
         filepath=model_file_path,
         monitor='val_loss',
         verbose=1,
-        save_best_only=True,
+        save_best_only=False,
         save_weights_only=True,
     )
 
@@ -100,7 +100,7 @@ def train(
         use_multiprocessing=multiprocessing_data_load,
         workers=num_workers_data_load,
         max_queue_size=30,
-        callbacks=[tensorboard, model_checkpointer],
+        callbacks=[tensorboard],
     )
 
     # start training all layers
@@ -154,14 +154,11 @@ if __name__ == '__main__':
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples_ = load_samples(samples_file)
 
-    for epochs_train_dense in [5]:
-        for epochs_train_all in [8]:
-            for learning_rate_all in [0.00001]:
-                logger.info(f"using epochs_train_dense {epochs_train_dense} and epochs_train_all {epochs_train_all}")
-                config["epochs_train_dense"] = epochs_train_dense
-                config["epochs_train_all"] = epochs_train_all
-                config["learning_rate_all"] = learning_rate_all
-                config["existing_weights"] = args.existing_weights
-                model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
-                evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
-                K.clear_session()
+    for learning_rate_all in [0.00001, 0.000001]:
+    # for learning_rate_all in [0.0001]:
+        logger.info(f"using learning_rate_all {learning_rate_all}")
+        config["learning_rate_all"] = learning_rate_all
+        config["existing_weights"] = args.existing_weights
+        model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
+        evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
+        K.clear_session()
