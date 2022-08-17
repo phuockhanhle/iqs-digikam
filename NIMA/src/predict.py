@@ -61,7 +61,7 @@ def evaluate_core(model, image_source, predictions_file, reference_file, img_for
 
     # initialize data generator
     data_generator = TestDataGenerator(samples, image_dir, 4, 3, model.preprocessing_function(),
-                                       img_format=img_format)
+                                       img_format=img_format, img_load_dims=(256, 256))
 
     # get predictions
     predictions = predict(model.nima_model, data_generator)

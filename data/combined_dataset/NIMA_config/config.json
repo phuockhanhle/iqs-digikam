@@ -5,7 +5,7 @@
   "base_model_name": "InceptionResNetV2",
   "existing_weights": null,
   "n_classes": 10,
-  "batch_size": 32,
+  "batch_size": 16,
   "epochs_train_dense": 3,
   "learning_rate_dense": 0.001,
   "decay_dense": 0,

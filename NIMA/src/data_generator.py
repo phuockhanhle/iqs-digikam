@@ -37,7 +37,7 @@ class TrainDataGenerator(tf.keras.utils.Sequence):
 
     def __data_generator(self, batch_samples):
         # initialize images and labels tensors for faster processing
-        X = np.empty((len(batch_samples), *self.img_crop_dims, 3))
+        X = np.empty((len(batch_samples), *self.img_load_dims, 3))
         y = np.empty((len(batch_samples), self.n_classes))
 
         for i, sample in enumerate(batch_samples):
@@ -48,8 +48,8 @@ class TrainDataGenerator(tf.keras.utils.Sequence):
                 img_file = sample["image_path"]
             img = utils.load_image(img_file, self.img_load_dims)
             if img is not None:
-                img = utils.random_crop(img, self.img_crop_dims)
-                img = utils.random_horizontal_flip(img)
+                # img = utils.random_crop(img, self.img_crop_dims)
+                # img = utils.random_horizontal_flip(img)
                 X[i, ] = img
 
             # normalize labels
@@ -58,7 +58,7 @@ class TrainDataGenerator(tf.keras.utils.Sequence):
 
         # apply basenet specific preprocessing
         # input is 4D numpy array of RGB values within [0, 255]
-        X = self.basenet_preprocess(X)
+        # X = self.basenet_preprocess(X)
 
         return X, y
 
@@ -113,7 +113,7 @@ class TestDataGenerator(tf.keras.utils.Sequence):
 
         # apply basenet specific preprocessing
         # input is 4D numpy array of RGB values within [0, 255]
-        X = self.basenet_preprocess(X)
+        # X = self.basenet_preprocess(X)
 
         return X, y
 

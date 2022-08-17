@@ -67,6 +67,7 @@ def train(
         n_classes,
         nima.preprocessing_function(),
         img_format=img_format,
+        img_load_dims=(256, 256)
     )
 
     # initialize callbacks TensorBoard and ModelCheckpoint
@@ -87,25 +88,25 @@ def train(
     )
 
     # start training only dense layers
-    for layer in nima.base_model.layers:
-        layer.trainable = False
+    # for layer in nima.base_model.layers:
+    #     layer.trainable = False
 
-    nima.compile()
-
-    nima.nima_model.fit_generator(
-        generator=training_generator,
-        validation_data=validation_generator,
-        epochs=epochs_train_dense,
-        verbose=1,
-        use_multiprocessing=multiprocessing_data_load,
-        workers=num_workers_data_load,
-        max_queue_size=30,
-        callbacks=[tensorboard],
-    )
+    # nima.compile()
+    #
+    # nima.nima_model.fit_generator(
+    #     generator=training_generator,
+    #     validation_data=validation_generator,
+    #     epochs=epochs_train_dense,
+    #     verbose=1,
+    #     use_multiprocessing=multiprocessing_data_load,
+    #     workers=num_workers_data_load,
+    #     max_queue_size=30,
+    #     callbacks=[tensorboard],
+    # )
 
     # start training all layers
-    for layer in nima.base_model.layers:
-        layer.trainable = True
+    # for layer in nima.base_model.layers:
+    #     layer.trainable = True
 
     nima.learning_rate = learning_rate_all
     nima.decay = decay_all
@@ -155,7 +156,7 @@ if __name__ == '__main__':
     samples_ = load_samples(samples_file)
 
     for learning_rate_all in [0.00001, 0.000001]:
-    # for learning_rate_all in [0.0001]:
+        # for learning_rate_all in [0.0001]:
         logger.info(f"using learning_rate_all {learning_rate_all}")
         config["learning_rate_all"] = learning_rate_all
         config["existing_weights"] = args.existing_weights
