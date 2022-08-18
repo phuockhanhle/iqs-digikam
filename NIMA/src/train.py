@@ -154,7 +154,7 @@ if __name__ == '__main__':
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples_ = load_samples(samples_file)
 
-    for epochs_train_all in [8, 11]:
+    for epochs_train_all in [11]:
         logger.info(f"using epochs_train_all {epochs_train_all}")
         config["epochs_train_all"] = epochs_train_all
         config["existing_weights"] = args.existing_weights
