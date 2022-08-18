@@ -9,7 +9,7 @@
   "epochs_train_dense": 3,
   "learning_rate_dense": 0.001,
   "decay_dense": 0,
-  "epochs_train_all": 8,
+  "epochs_train_all": 11,
   "learning_rate_all": 0.00001,
   "decay_all": 0.000023,
   "l2_reg": null,

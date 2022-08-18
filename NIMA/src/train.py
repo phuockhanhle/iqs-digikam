@@ -154,8 +154,7 @@ if __name__ == '__main__':
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples_ = load_samples(samples_file)
 
-    for learning_rate_all in [0.00001, 0.000001]:
-    # for learning_rate_all in [0.0001]:
+    for learning_rate_all in [0.00001]:
         logger.info(f"using learning_rate_all {learning_rate_all}")
         config["learning_rate_all"] = learning_rate_all
         config["existing_weights"] = args.existing_weights

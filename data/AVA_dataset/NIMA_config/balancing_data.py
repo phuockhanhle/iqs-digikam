@@ -47,5 +47,5 @@ def save_json(data_frame: List[Dict[str, Any]], saved_path):
 if __name__ == '__main__':
     data = load_json(r'./data/AVA_dataset/NIMA_config/samples_train.json')
     analyse_data(data)
-    saved_data = balancing_data(data)
-    save_json(saved_data, r'./data/AVA_dataset/NIMA_config/samples_train.json')
+    # saved_data = balancing_data(data)
+    # save_json(saved_data, r'./data/AVA_dataset/NIMA_config/samples_train.json')
