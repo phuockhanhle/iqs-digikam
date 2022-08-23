@@ -4,7 +4,7 @@
   "docker_image": "idealo/nima-gpu",
   "base_model_name": "InceptionV3",
   "existing_weights": null,
-  "n_classes": 10,
+  "n_classes": 3,
   "batch_size": 32,
   "epochs_train_dense": 3,
   "learning_rate_dense": 0.001,

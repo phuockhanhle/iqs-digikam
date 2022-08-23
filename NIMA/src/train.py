@@ -148,16 +148,12 @@ if __name__ == '__main__':
 
     config_file = os.path.join(job_dir, 'config.json')
     config = load_config(config_file)
-    config["n_classes"] = 3
     logger.info(config)
 
     samples_file = os.path.join(job_dir, 'samples_train.json')
     samples_ = load_samples(samples_file)
 
-    for learning_rate_all in [0.00001]:
-        logger.info(f"using learning_rate_all {learning_rate_all}")
-        config["learning_rate_all"] = learning_rate_all
-        config["existing_weights"] = args.existing_weights
-        model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
-        evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
-        K.clear_session()
+    config["existing_weights"] = args.existing_weights
+    model_nima = train(samples=samples_, job_dir=job_dir, image_dir=image_dir, **config)
+    evaluate_core(model_nima, args.image_source, args.predictions_file, args.reference_file)
+    K.clear_session()
