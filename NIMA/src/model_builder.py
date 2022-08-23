@@ -34,10 +34,11 @@ class Nima:
         BaseCnn = getattr(self.base_module, self.base_model_name)
 
         # load pre-trained model
-        self.base_model = BaseCnn(input_shape=(224, 224, 3), weights=self.weights, include_top=False, pooling='avg')
+        self.base_model = BaseCnn(input_shape=(299, 299, 3), weights=self.weights, include_top=False, pooling='avg')
 
         # add dropout and dense layer
         x = Dropout(self.dropout_rate)(self.base_model.output)
+        x = Dense(units=64, activation='relu')(x)
         x = Dense(units=self.n_classes, activation='softmax')(x)
 
         self.nima_model = Model(self.base_model.inputs, x)

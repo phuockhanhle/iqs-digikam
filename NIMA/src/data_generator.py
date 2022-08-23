@@ -8,7 +8,7 @@ class TrainDataGenerator(tf.keras.utils.Sequence):
     """inherits from Keras Sequence base object, allows using multiprocessing in .fit_generator"""
 
     def __init__(self, samples, img_dir, batch_size, n_classes, basenet_preprocess, img_format,
-                 img_load_dims=(256, 256), img_crop_dims=(224, 224), shuffle=True):
+                 img_load_dims=(320, 320), img_crop_dims=(299, 299), shuffle=True):
         self.indexes = None
         self.samples = samples
         self.img_dir = img_dir
@@ -67,7 +67,7 @@ class TestDataGenerator(tf.keras.utils.Sequence):
     """inherits from Keras Sequence base object, allows using multiprocessing in .fit_generator"""
 
     def __init__(self, samples, img_dir, batch_size, n_classes, basenet_preprocess, img_format,
-                 img_load_dims=(224, 224)):
+                 img_load_dims=(299, 299)):
         self.indexes = None
         self.samples = samples
         self.img_dir = img_dir
