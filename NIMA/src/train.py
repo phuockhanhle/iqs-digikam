@@ -47,12 +47,12 @@ def train(
         nima.nima_model.load_weights(existing_weights)
 
     # split samples in train and validation set, and initialize data generators
-    samples_train, samples_test = train_test_split(
-        samples, test_size=0.05, shuffle=True, random_state=10207
-    )
+    # samples_train, samples_test = train_test_split(
+    #     samples, test_size=0.05, shuffle=True, random_state=10207
+    # )
 
     training_generator = TrainDataGenerator(
-        samples_train,
+        samples,
         image_dir,
         batch_size,
         n_classes,
@@ -60,14 +60,14 @@ def train(
         img_format=img_format,
     )
 
-    validation_generator = TestDataGenerator(
-        samples_test,
-        image_dir,
-        batch_size,
-        n_classes,
-        nima.preprocessing_function(),
-        img_format=img_format,
-    )
+    # validation_generator = TestDataGenerator(
+    #     samples_test,
+    #     image_dir,
+    #     batch_size,
+    #     n_classes,
+    #     nima.preprocessing_function(),
+    #     img_format=img_format,
+    # )
 
     # initialize callbacks TensorBoard and ModelCheckpoint
     tensorboard = TensorBoard(
@@ -75,7 +75,7 @@ def train(
     )
 
     model_save_name = (
-            'weights_' + base_model_name.lower() + '_{epoch:02d}_{val_loss:.3f}.hdf5'
+            'weights_' + base_model_name.lower() + '_{epoch:02d}.hdf5'
     )
     model_file_path = os.path.join(job_dir, 'weights', model_save_name)
     model_checkpointer = ModelCheckpoint(
@@ -94,7 +94,6 @@ def train(
 
     nima.nima_model.fit_generator(
         generator=training_generator,
-        validation_data=validation_generator,
         epochs=epochs_train_dense,
         verbose=1,
         use_multiprocessing=multiprocessing_data_load,
@@ -113,7 +112,6 @@ def train(
 
     nima.nima_model.fit_generator(
         generator=training_generator,
-        validation_data=validation_generator,
         epochs=epochs_train_dense + epochs_train_all,
         initial_epoch=epochs_train_dense,
         verbose=1,
