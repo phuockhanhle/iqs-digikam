@@ -3,9 +3,9 @@ import glob
 import argparse
 import json
 import logging
-
+from tensorflow.python.framework.convert_to_constants import convert_variables_to_constants_v2 as cvtc2
+import tensorflow as tf
 import numpy
-
 from evaluate import evaluate
 from utils import save_json, set_logger
 from model_builder import Nima
@@ -84,6 +84,14 @@ def main(base_model_name, weights_file, image_source, predictions_file, referenc
     nima.nima_model.load_weights(weights_file)
 
     evaluate_core(nima, image_source, predictions_file, reference_file, img_format)
+
+    full_model = tf.function(lambda inputs: nima.nima_model(inputs))
+    full_model = full_model.get_concrete_function(
+        [tf.TensorSpec(model_input.shape, model_input.dtype) for model_input in nima.nima_model.inputs])
+    frozen_func = cvtc2(full_model)
+    frozen_func.graph.as_graph_def()
+    tf.io.write_graph(graph_or_graph_def=frozen_func.graph, logdir="./frozen_models",
+                      name="simple_frozen_graph.pb", as_text=False)
 
 
 if __name__ == '__main__':

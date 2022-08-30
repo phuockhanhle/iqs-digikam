@@ -1,0 +1,2 @@
+08/25/2022 11:55:43 PM: [ COMMAND: ./NIMA/src/predict.py -b InceptionV3 -w ./data/combined_dataset/NIMA_config/weights/weights_inceptionv3_11.hdf5 -is D:/AVA_dataset/images/images -pf ./data/combined_dataset/NIMA_config/pred.json -rf ./data/combined_dataset/NIMA_config/samples_test.json ]
+08/25/2022 11:55:43 PM: [ checkpoint weights_inceptionv3_4.hdf5 ]

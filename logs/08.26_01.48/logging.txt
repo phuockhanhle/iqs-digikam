@@ -1,0 +1,4 @@
+08/26/2022 01:48:47 AM: [ COMMAND: ./NIMA/src/predict.py -b InceptionV3 -w ./data/combined_dataset/NIMA_config/weights/weights_inceptionv3_iqs_digikam.hdf5 -is D:/AVA_dataset/images/images -pf ./data/combined_dataset/NIMA_config/pred.json -rf ./data/combined_dataset/NIMA_config/samples_test.json ]
+08/26/2022 01:55:49 AM: [ list id absent : [] ]
+08/26/2022 01:55:49 AM: [ ***** F1 score digikam: [0.87075077 0.79001806 0.80675853] **** ]
+08/26/2022 01:55:49 AM: [ ***** accuracy digikam: 0.8078550710855404 **** ]
