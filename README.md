@@ -9,7 +9,7 @@ The main issue of this project is to define what is a good aesthetic image. Alth
 - *Pending image* is the normal image without distortion or artistic image but badly captured
 - *Accepted image* is a good artistic image.
 
-I used 4 dataset for training and evaluation : [Koniq10k][Koniq10k] (normal image), [SPAQ][SPAQ] (normal image), [EVA][EVA] (aesthetic image), [AVA][AVA] (aesthetic image). After labeling each image by above definition, I 
+I used 4 dataset for training and evaluation : [Koniq10k][Koniq10k] (normal image), [SPAQ][SPAQ] (normal image), [EVA][EVA] (aesthetic image), [AVA][AVA] (aesthetic image). After labeling each image by above definition, I applied the next structure to train the model.
 
 ## Data processing
 **EVA dataset** :
@@ -27,9 +27,10 @@ I used 4 dataset for training and evaluation : [Koniq10k][Koniq10k] (normal imag
 
 ## Training and evaluation
 To train and evaluate the model with the parameter of current report:
+
 `source NIMA/train.sh`
 
-To change the configuration for training, change the hyper-parameter in [here][https://github.com/phuockhanhle/iqs-digikam/blob/main/data/combined_dataset/NIMA_config/config.json]
+To change the configuration for training, change the hyper-parameter in [here](https://github.com/phuockhanhle/iqs-digikam/blob/main/data/combined_dataset/NIMA_config/config.json)
 
 
 The model checkpoint is saved after each epoch
