@@ -11,6 +11,8 @@ The main issue of this project is to define what is a good aesthetic image. Alth
 
 I used 4 dataset for training and evaluation : [Koniq10k][Koniq10k] (normal image), [SPAQ][SPAQ] (normal image), [EVA][EVA] (aesthetic image), [AVA][AVA] (aesthetic image). After labeling each image by above definition, I applied the next structure to train the model.
 
+![model_structure](https://github.com/phuockhanhle/iqs-digikam/blob/main/papers/model_structure.jpg?raw=true)
+
 ## Data processing
 **EVA dataset** :
 - Download data from https://github.com/kang-gnak/eva-dataset
