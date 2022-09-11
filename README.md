@@ -14,12 +14,12 @@ I used 4 dataset for training and evaluation : [Koniq10k][Koniq10k] (normal imag
 ## Data processing
 **EVA dataset** :
 - Download data from https://github.com/kang-gnak/eva-dataset
-- Change the path of [line 38][https://github.com/phuockhanhle/iqs-digikam/blob/b8f75e1b93f5fdd8cd0aedbd0626f1a00553b7f9/data/EVA_dataset/NIMA_config/convert_label_nima.py#L38] in data/EVA_dataset/NIMA_config/convert_label_nima.py to adapt the place of the dataset
+- Change the path of [line 38](https://github.com/phuockhanhle/iqs-digikam/blob/b8f75e1b93f5fdd8cd0aedbd0626f1a00553b7f9/data/EVA_dataset/NIMA_config/convert_label_nima.py#L38) in data/EVA_dataset/NIMA_config/convert_label_nima.py to adapt the place of the dataset
 - Run `python ./data/EVA/NIMA_config/convert_label_nima.py`
 
 **AVA dataset** :
 - Download data from https://github.com/imfing/ava_downloader
-- Change the path of [line 52][https://github.com/phuockhanhle/iqs-digikam/blob/b8f75e1b93f5fdd8cd0aedbd0626f1a00553b7f9/data/AVA_dataset/NIMA_config/convert_label_nima.py#L52] to [line 55][https://github.com/phuockhanhle/iqs-digikam/blob/b8f75e1b93f5fdd8cd0aedbd0626f1a00553b7f9/data/AVA_dataset/NIMA_config/convert_label_nima.py#L55] in data/AVA_dataset/NIMA_config/convert_label_nima.py to adapt the place of the dataset
+- Change the path of [line 52](https://github.com/phuockhanhle/iqs-digikam/blob/b8f75e1b93f5fdd8cd0aedbd0626f1a00553b7f9/data/AVA_dataset/NIMA_config/convert_label_nima.py#L52) to [line 55](https://github.com/phuockhanhle/iqs-digikam/blob/b8f75e1b93f5fdd8cd0aedbd0626f1a00553b7f9/data/AVA_dataset/NIMA_config/convert_label_nima.py#L55) in data/AVA_dataset/NIMA_config/convert_label_nima.py to adapt the place of the dataset
 - Run `python ./data/AVA/NIMA_config/convert_label_nima.py`
 
 **Combine datasets**:
